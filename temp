@@ -1,0 +1,33 @@
+import streamlit as st
+
+from chat_interface import ChatInterface
+from chatbot_config import ChatbotConfig
+
+def main() -> None:
+    """Main entry point of the application"""
+    # Initialize configuration
+    config = ChatbotConfig()
+    
+    # Setup sidebar configuration
+    config.setup_sidebar()
+    
+    # Initialize chat interface
+    chat_interface = ChatInterface(config)
+    
+    # Setup UI
+    chat_interface.setup_ui()
+    
+    # Initialize session state
+    chat_interface.initialize_session_state()
+    
+    # Get user input
+    user_question = st.text_input("Ask a question:")
+    
+    # Process user input and display response
+    if user_question:
+        response = chat_interface.process_user_input(user_question)
+        if response:
+            st.write("Chatbot:", response)
+
+if __name__ == "__main__":
+    main()
